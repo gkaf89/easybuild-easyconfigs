@@ -25,7 +25,7 @@ exts_list = [
     ('reframe', version, {
         'download_dep_fail': False,
         'modulename': False,
-        'preinstallopts': "export PATH=%(installdir)s/bin:$PATH && ./bootstrap.sh +docs +pygelf && cp -r external %(installdir)s && ",
+        'preinstallopts': "export PATH=%(installdir)s/bin:$PATH && ./bootstrap.sh +docs +pygelf && cp --recursive external %(installdir)s && ",
         'sanity_pip_check': False,
         'source_tmpl': 'v%(version)s.tar.gz',
         'source_urls': ['https://github.com/reframe-hpc/reframe/archive/'],
@@ -34,8 +34,8 @@ exts_list = [
 ]
 
 postinstallcmds = [
-    "cp -a tools examples %(installdir)s",
-    "mkdir -p %(installdir)s/share && cp -a share/completions %(installdir)s/share/completions",
+    "cp --archive tools examples %(installdir)s",
+    "mkdir --parents %(installdir)s/share && cp --archive share/completions %(installdir)s/share/completions",
     r"sed -i 's@/\(python[0-9.]*\)$@/\1 -S@g' %(installdir)s/bin/reframe",
 ]
 
@@ -47,7 +47,7 @@ sanity_check_paths = {
     'dirs': ['external', 'lib', 'tools', 'examples']
 }
 
-sanity_check_commands = ['reframe -V']
+sanity_check_commands = ['reframe --version']
 
 # Since this is at the GCCcore toolchain level, make sure ReFrame is configured to purge modules before running
 # any tests by default
