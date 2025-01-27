@@ -3,7 +3,7 @@
 easyblock = 'PythonBundle'
 
 name = 'ReFrame'
-version = '4.7.2'
+version = '4.7.3'
 versionsuffix = '-Python-3.6'
 
 homepage = 'https://github.com/reframe-hpc/reframe'
@@ -70,7 +70,7 @@ exts_list = [
                           "./bootstrap.sh +docs +pygelf && cp --recursive external %(installdir)s && ",
         'source_tmpl': 'v%(version)s.tar.gz',
         'source_urls': ['https://github.com/reframe-hpc/reframe/archive/'],
-        'checksums': ['90e04eaaa21afd5c29a9c6218204c3df4503f624f21f2fe773f90e148d30c152'],
+        'checksums': ['74b8f56dc622d1c75fc1152d15d45e00edab9d2db1f6bc8fd7290125d69c74dd'],
     }),
 ]
 
