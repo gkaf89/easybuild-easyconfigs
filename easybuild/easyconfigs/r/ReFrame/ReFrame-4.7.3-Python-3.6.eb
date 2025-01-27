@@ -1,12 +1,17 @@
+# This EasyConfig is made with older setuptools and wheel versions, so that it still works with Python-3.6.X
+# For newer python versions, we suggest to use ReFrame-4.6.2.eb (without suffix)
 easyblock = 'PythonBundle'
 
 name = 'ReFrame'
-version = '4.7.2'
+version = '4.7.3'
+versionsuffix = '-Python-3.6'
 
 homepage = 'https://github.com/reframe-hpc/reframe'
 description = '''ReFrame is a framework for writing regression tests for HPC systems.'''
 
 toolchain = SYSTEM
+
+use_pip = True
 
 allow_system_deps = [('Python', SYS_PYTHON_VERSION)]
 
@@ -16,32 +21,33 @@ osdependencies = [
     ('libxslt', 'libxslt1.1'),
 ]
 
-# We use pip, setuptools and wheel compatible with Python 3.7 and above
-# Note that ReFrame itself is compatible also with Python 3.6
-# As listed in the python_requires in https://github.com/reframe-hpc/reframe/blob/v4.7.1/setup.cfg
-# To use with Python 3.6, please install ReFrame-4.7.1-Python-3.6.eb instead
+# Listed as python_requires in https://github.com/reframe-hpc/reframe/blob/v4.6.2/setup.cfg
 req_py_majver = 3
-req_py_minver = 7
+req_py_minver = 6
+
+# The setuptools in this EasyConfig is the latest that works for Python 3.6, but is too old for Python 3.12
+# See https://github.com/easybuilders/easybuild-easyconfigs/pull/21269#discussion_r1741570244
+max_py_majver = 3
+max_py_minver = 11
 
 exts_list = [
-    # stick to pip 24.0, which is compatible with Python 3.7
+    # stick to pip 21.3.1, which is compatible with Python 3.6
     # we still need pip outside of ReFrame's external dependencies, since the install cmd uses pip
-    ('pip', '24.0', {
+    ('pip', '21.3.1', {
         'use_pip': False,
-        'checksums': ['ea9bd1a847e8c5774a5777bb398c19e80bcd4e2aa16a4b301b718fe6f593aba2'],
+        'checksums': ['fd11ba3d0fdb4c07fbc5ecbba0b1b719809420f25038f8ee3cd913d3faa3033a'],
     }),
-    # Require new enough setuptools to work with Python 3.12, which doesn't have pkgutil.ImpImporter anymore
-    # See https://github.com/pypa/setuptools/commit/6653e747c3815b140156249205397ef3719581ee
-    # 68.0.0 is the latest compatible with Python 3.7
-    ('setuptools', '68.0.0', {
+    # Require new enough setuptools to install with e.g. pyproject.toml
+    # 59.6.0 is the latest compatible with Python 3.6
+    ('setuptools', '59.6.0', {
         'use_pip': False,
         'source_urls': ['https://pypi.python.org/packages/source/s/setuptools/'],
-        'checksums': ['baf1fdb41c6da4cd2eae722e135500da913332ab3f2f5c7d33af9b492acb5235'],
+        'checksums': ['22c7348c6d2976a52632c67f7ab0cdf40147db7789f9aed18734643fe9cf3373'],
     }),
-    # stick to wheel 0.42.0, which is compatible with Python 3.7
-    ('wheel', '0.42.0', {
-        'source_tmpl': 'wheel-%(version)s-py3-none-any.whl',
-        'checksums': ['177f9c9b0d45c47873b619f5b650346d632cdc35fb5e4d25058e09c9e581433d'],
+    # stick to wheel 0.37.1, which is compatible with Python 3.6
+    ('wheel', '0.37.1', {
+        'source_tmpl': 'wheel-%(version)s-py2.py3-none-any.whl',
+        'checksums': ['4bdcd7d840138086126cd09254dc6195fb4fc6f01c050a1d7236f2630db1d22a'],
     }),
     # ReFrame's bootstrap script is intended to run with zero dependencies. It downloads all python deps for ReFrame
     # into a %(installdir)/external directory. ReFrame's main executable (reframe) adds this dir to python's sys.path
@@ -66,7 +72,7 @@ exts_list = [
                           "./bootstrap.sh +docs +pygelf && cp --recursive external %(installdir)s && ",
         'source_tmpl': 'v%(version)s.tar.gz',
         'source_urls': ['https://github.com/reframe-hpc/reframe/archive/'],
-        'checksums': ['90e04eaaa21afd5c29a9c6218204c3df4503f624f21f2fe773f90e148d30c152'],
+        'checksums': ['74b8f56dc622d1c75fc1152d15d45e00edab9d2db1f6bc8fd7290125d69c74dd'],
     }),
 ]
 
