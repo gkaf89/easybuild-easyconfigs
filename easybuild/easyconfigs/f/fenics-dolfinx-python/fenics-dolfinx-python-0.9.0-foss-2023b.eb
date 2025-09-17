@@ -28,8 +28,8 @@ dependencies = [
     ('Python', '3.11.5'),
     ('SciPy-bundle','2023.11'),
     ('cffi', '1.15.1'),
-    ('fenics-basix-python', '%(version)s'),
-    ('fenics-ffcx', '%(version)s'),
+    ('fenics-basix-python', '0.9.0'),
+    ('fenics-ffcx', '0.9.0'),
     ('fenics-ufl', '2024.2.0'),
     ('mpi4py', '3.1.5'),
     ('petsc4py', '3.22.5'),
@@ -45,6 +45,8 @@ install_src = './python'
 # The module extension provides the dolfinx Python package that is tested by the sanity check.
 #
 # See v5.1.1: easybuild-framework/easybuild/framework/extension.py:313
+#
+# Disable import sanity check for dolfinx, since we need to import MPI from mpi4py first
 #
 options = {'modulename': False}
 
