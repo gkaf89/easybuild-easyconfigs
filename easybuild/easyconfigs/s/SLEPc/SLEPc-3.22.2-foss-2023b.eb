@@ -14,7 +14,7 @@ source_urls = ['https://slepc.upv.es/download/distrib']
 sources = [SOURCELOWER_TAR_GZ]
 checksums = ['b60e58b2fa5eb7db05ce5e3a585811b43b1cc7cf89c32266e37b05f0cefd8899']
 
-dependencies = [('PETSc', '3.22.2')]
+dependencies = [('PETSc', '3.22.5')]
 
 petsc_arch = 'installed-arch-linux2-c-opt'
 
